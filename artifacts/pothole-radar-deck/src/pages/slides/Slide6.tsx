@@ -12,17 +12,17 @@ export default function Slide6() {
         <div className="flex w-[28vw] flex-col items-center">
           <PhonePanel kind="scan" />
           <div className="mt-[2vh] text-[1.5vw] font-semibold text-text">01 / Scan</div>
-          <div className="mt-[0.8vh] text-[1.15vw] text-muted">Start or stop a drive and watch live G-force</div>
+          <div className="mt-[0.8vh] text-[1.5vw] text-muted">Start or stop a drive and watch live G-force</div>
         </div>
         <div className="flex w-[28vw] flex-col items-center">
           <PhonePanel kind="map" />
           <div className="mt-[2vh] text-[1.5vw] font-semibold text-text">02 / Map</div>
-          <div className="mt-[0.8vh] text-[1.15vw] text-muted">Inspect color-coded impact pins and details</div>
+          <div className="mt-[0.8vh] text-[1.5vw] text-muted">Inspect color-coded impact pins and details</div>
         </div>
         <div className="flex w-[28vw] flex-col items-center">
           <PhonePanel kind="log" />
           <div className="mt-[2vh] text-[1.5vw] font-semibold text-text">03 / Log</div>
-          <div className="mt-[0.8vh] text-[1.15vw] text-muted">Filter detections and export CSV locally</div>
+          <div className="mt-[0.8vh] text-[1.5vw] text-muted">Filter detections and export CSV locally</div>
         </div>
       </div>
       <Footer label="POTHOLERADAR / ONE CONTINUOUS STORY" />
