@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "IqSRCa0R5sENv_WVFZPPV"
+uri = "file://.local/outputs/PotholeRadar-Project-Deck.pptx"
+type = "slides"
+title = "PotholeRadar Project Deck.pptx"
