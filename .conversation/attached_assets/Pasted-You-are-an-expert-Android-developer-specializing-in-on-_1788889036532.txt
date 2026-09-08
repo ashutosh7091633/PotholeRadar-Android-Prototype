@@ -1,0 +1,70 @@
+You are an expert Android developer specializing in on-device AI, sensor fusion, and Jetpack Compose.
+Build a complete, production-ready prototype for "PotholeRadar" — an offline, on-device pothole detection and mapping Android app designed for hackathon demonstration.
+
+---
+
+### 1. High-Level Requirements & Tech Stack
+- **Language & Architecture:** Kotlin, Single-Activity, Jetpack Compose, MVVM + Clean Architecture, Coroutines & Flow.
+- **Android Target:** minSdk = 26, targetSdk = 34.
+- **Sensors:** `SensorManager` with `TYPE_LINEAR_ACCELERATION` (gravity-free) and `TYPE_GYROSCOPE`.
+- **Location:** `FusedLocationProviderClient` (GPS location and speed retrieval).
+- **Background Execution:** Android Foreground Service with Persistent Notification & Partial WakeLock.
+- **Local Database:** Room SQLite (`PotholeEventEntity`).
+- **Mapping:** `osmdroid-android` (OpenStreetMap offline rendering with cached/bundled tiles or fallback canvas).
+- **ML / Detection:** Hybrid Physics + TFLite pipeline (with a built-in heuristic classifier fallback if `model.tflite` is not yet bundled).
+- **Demo / Simulation Mode:** A built-in "Simulate Drive" switch that injects synthetic acceleration spikes and mock GPS coordinates along a route so the app can be demoed on a table without a car.
+
+---
+
+### 2. Project File Structure to Generate
+Produce complete, working code for all the following components:
+
+1. `build.gradle.kts` (App level) with all necessary dependencies (Compose, Room, OSMDroid, Play Services Location, TFLite).
+2. `AndroidManifest.xml` with permissions (`HIGH_SAMPLING_RATE_SENSORS`, `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`, `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_LOCATION`, `WAKE_LOCK`).
+3. **Data Layer:**
+   - `PotholeEntity.kt`: Fields (`id`, `latitude`, `longitude`, `timestamp`, `peakGForce`, `severity`, `eventType`, `speedKmh`).
+   - `PotholeDao.kt`: Flow-based queries for real-time UI updates, insert, clear all, and query within bounding box.
+   - `AppDatabase.kt`: Room database builder.
+4. **Sensor & Detection Engine:**
+   - `SensorBuffer.kt`: Rolling circular buffer maintaining the last 2 seconds of 3-axis accelerometer and gyroscope data sampled at ~50–100 Hz.
+   - `PotholeDetector.kt`:
+     * Peak Z-axis spike trigger (`peak_z > 2.5g` / `~24.5 m/s²`).
+     * Impulse duration differentiator:
+       - Potholes: sharp impulse (< 150 ms).
+       - Speed Bumps: broader sinusoidal wave (300–600 ms).
+     * Speed filter: ignores disturbances if vehicle speed < 12 km/h (configurable or bypassed in Demo Mode).
+     * Debounce/Cooldown: 1.5-second cooldown to prevent multi-triggering from a single event.
+     * Severity categorization: Minor (2.0–3.0g), Moderate (3.0–4.5g), Severe (> 4.5g).
+     * Optional TFLite classification hook (`classifyWindow(buffer): DetectionResult`).
+5. **Background Service:**
+   - `DetectionForegroundService.kt`:
+     * Manages sensor listeners and location updates.
+     * Posts immediate events to Room DB via repository.
+     * Emits events to a shared Kotlin Flow/StateFlow for the UI.
+     * Audio alert via Android `ToneGenerator` or `TextToSpeech` on detection.
+6. **UI Layer (Jetpack Compose):**
+   - `MainActivity.kt`: Handles runtime permissions and initializes Compose.
+   - `MainViewModel.kt`: Exposes active service state, current speed, live G-force, total detected count, and event history.
+   - `DashboardScreen.kt`:
+     * Start/Stop service toggle button.
+     * Live G-force visual meter / animated pulse.
+     * "Simulate Drive" toggle button for live pitch demos.
+     * Real-time event alert banner with severity badges.
+   - `MapScreen.kt`:
+     * Integrates `osmdroid` `MapView` via `AndroidView`.
+     * Renders detected potholes as color-coded pins/circles (Red = Severe, Orange = Moderate, Yellow = Speed Bump).
+     * Tapping a marker displays event details (Time, G-Force, Speed).
+   - `LogScreen.kt`:
+     * History list of all detections with time and coordinates.
+     * "Export CSV" button using `Intent.ACTION_SEND` to export data locally without internet.
+
+---
+
+### 3. Implementation Details & Edge Cases
+- **Gravity Handling:** Prefer `Sensor.TYPE_LINEAR_ACCELERATION`. If unavailable on older devices, implement a simple high-pass filter over `Sensor.TYPE_ACCELEROMETER`:
+  `gravity = alpha * gravity + (1 - alpha) * event.values`
+  `linear_acceleration = event.values - gravity`
+- **Airplane Mode Compatibility:** Ensure no network calls or cloud SDKs are referenced. Set `osmdroid` configuration to offline mode (`Configuration.getInstance().isMapViewHardwareAccelerated = true`, set tile source to Mapnik with offline cache).
+- **Graceful Lifecycle:** Cleanly unregister sensor and location listeners in `onDestroy` of the Service.
+
+Provide clean, modular, and fully written code ready to compile and run in Android Studio.
