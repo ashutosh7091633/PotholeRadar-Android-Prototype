@@ -1,0 +1,28 @@
+kind = "slides"
+previewPath = "/pothole-radar-deck/"
+title = "PotholeRadar Project Deck"
+description = "An 8-slide professional showcase of PotholeRadar: an offline-first mobile prototype that detects, maps, and logs road impacts for safer streets."
+version = "1.0.0"
+id = "artifacts/pothole-radar-deck"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/pothole-radar-deck/" ]
+localPort = 25014
+
+[services.development]
+run = "pnpm --filter @workspace/pothole-radar-deck run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pothole-radar-deck", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pothole-radar-deck/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25014"
+BASE_PATH = "/pothole-radar-deck/"

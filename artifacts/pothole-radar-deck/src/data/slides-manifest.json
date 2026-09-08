@@ -1,0 +1,66 @@
+[
+  {
+    "id": "a7b9c2d1-3f5e-4a6b-8c1d-0e2f3a4b5c6d",
+    "position": 1,
+    "filepath": "src/pages/slides/Slide1.tsx",
+    "title": "PotholeRadar",
+    "description": "Offline-first road impact detection for safer streets.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "b8c0d3e2-4a6f-5b7c-9d2e-1f3a4b5c6d7e",
+    "position": 2,
+    "filepath": "src/pages/slides/Slide2.tsx",
+    "title": "Road damage is felt before it is reported",
+    "description": "The opportunity for sensor-led road evidence.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "c9d1e4f3-5b7a-6c8d-0e3f-2a4b5c6d7e8f",
+    "position": 3,
+    "filepath": "src/pages/slides/Slide3.tsx",
+    "title": "From motion to meaning",
+    "description": "The on-device signal path.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "d0e2f5a4-6c8b-7d9e-1f4a-3b5c6d7e8f90",
+    "position": 4,
+    "filepath": "src/pages/slides/Slide4.tsx",
+    "title": "Detection designed for the road",
+    "description": "Explainable thresholds and severity.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "e1f3a6b5-7d9c-8e0f-2a5b-4c6d7e8f901a",
+    "position": 5,
+    "filepath": "src/pages/slides/Slide5.tsx",
+    "title": "A demo that works on a table",
+    "description": "A sensor story that is ready to demonstrate.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "f2a4b7c6-8e0d-9f1a-3b6c-5d7e8f901a2b",
+    "position": 6,
+    "filepath": "src/pages/slides/Slide6.tsx",
+    "title": "Three surfaces, one workflow",
+    "description": "Scan, map, and log the same event.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "a3b5c8d7-9f1e-0a2b-4c7d-6e8f901a2b3c",
+    "position": 7,
+    "filepath": "src/pages/slides/Slide7.tsx",
+    "title": "Offline by design",
+    "description": "Reliability before native service hardening.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "b4c6d9e8-0a2f-1b3c-5d8e-7f901a2b3c4d",
+    "position": 8,
+    "filepath": "src/pages/slides/Slide8.tsx",
+    "title": "Prototype today. Road intelligence next.",
+    "description": "The path from demo to native road intelligence.",
+    "speakerNotes": ""
+  }
+]
